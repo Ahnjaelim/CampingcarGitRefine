@@ -1,0 +1,116 @@
+@charset "UTF-8";
+
+.board_list thead th {font-weight:bold;}
+.board_list td span {color:#c8c8c8; font-size:12px; position:relative; top:-2px;}
+.board_table {}
+.board_table thead th {background:#cfe2ff; color:#0d6efd; text-align:center; border:1px solid #9ec5fe; border-left:none; border-right:none;}
+/* .board_table tbody tr:hover {background:#f0f0f0;}*/
+.board_table tbody th {text-align:center;}
+.board_table tbody td {font-weight:normal !important;}
+
+.board_bot {padding:25px 0px 0px 0px;}
+.board_bot nav {}
+.board_bot div {text-align:right; margin:-38px 0px 0px 0px;}
+.search {padding:40px 0px 0px 0px;}
+.pagination li {cursor:pointer;}
+
+.board_view a.btn {color:#ffffff;}
+.board_view .content {padding:60px 0px 60px 0px; min-height:300px; border-bottom:1px solid #c8c8c8; margin:0px 0px 60px 0px;}
+.board_view .filelist li {padding:0px 0px 30px 0px;}
+.board_view .filelist li img {max-width:1200px;}
+
+.board_error {background:#f0f0f0; border:1px solid #dcdcdc; padding:60px; text-align:center;}
+.board_error h3 {padding:0px 0px 10px 0px; color:#dc3545;}
+
+.board_write .input-group {margin:0px 0px 10px 0px;}
+.board_write .input-group-text {width:200px; text-align:center;}
+.daterangepicker td.off {color:#dcdcdc;}
+.daterangepicker .calendar-table th:nth-last-child(1){color:#0060ef;}
+.daterangepicker .calendar-table tbody tr td:nth-last-child(1){color:#0060ef;}
+.daterangepicker .calendar-table th:nth-child(1){color:#ff0000;}
+.daterangepicker .calendar-table tbody tr td:nth-child(1){color:#ff0000;}
+.daterangepicker tbody tr td.disabled {text-decoration:none; color:#dcdcdc !important;}
+
+/* ================================================================================ 사용자 > 예약 > 달력 */
+
+.calendar h3 {text-align:center; padding:0px 0px 60px 0px;}
+.calendar th, .calendar td {text-align:center;}
+.calendar tbody p {padding:10px 0px 10px 0px;}
+.calendar .d-grid {min-height:240px;}
+
+/* ================================================================================ 사용자 > 차량 */
+
+.carread {border-bottom:1px solid #dcdcdc; padding:0px 0px 50px 0px; margin:0px 0px 60px 0px;}
+.carread .table th {border:1px solid #c8c8c8; text-align:center;}
+.carread div,
+.carread table {float:left;}
+.carread div {width:430px;}
+.carread img {width:400px;}
+.carread table {width:770px;}
+
+/* ================================================================================ 관리자 > 차량 */
+
+.admcarread {border-bottom:1px solid #c8c8c8; padding:0px 0px 60px 0px; margin:0px 0px 60px 0px;}
+.admcarread .layout {width:100%; background:transparent;}
+.admcarread .layout img {width:400px;}
+.admcarread .layout tr {vertical-align:top;}
+.admcarread .table th {border:1px solid #c8c8c8; text-align:center;}
+
+/* ================================================================================ 관리자 > 예약 > 달력 */
+
+.rent_calendar h3 {padding:0px 0px 30px 0px;}
+.rent_calendar .row {clear:both; width:3360px; height:100px; position:relative; padding:0 !important; --bs-gutter-x:0;}
+.rent_calendar .row .colhead {float:left; width:200px; height:100px; background:#ffffff; border:1px solid #c8c8c8; border-top:none; text-align:center; padding:15px; font-weight:bold;}
+.rent_calendar .row .cell {float:left; width:100px; height:100px; border:1px solid #dcdcdc; border-left:none; border-top:none; color:#c8c8c8; padding:0; position:relative; z-index:0; font-weight:bold;}
+.rent_calendar .row .content {padding:0px 0px 0px 200px; position:absolute; top:0; left:0; }
+.rent_calendar .date th {}
+.rent_calendar .date th div {width:200px; border:1px solid #dcdcdc; padding:25px; height:80px; text-align:center; font-weight:bold;}
+.rent_calendar .date td div {width:100px; height:80px; border:1px solid #c8c8c8; border-left:none; text-align:center; padding:8px 0px 0px 0px}
+.rent_calendar .date .day {font-size:24px; font-weight:bold;}
+.rent_calendar .date .sun p {color:#ff0000;}
+.rent_calendar .date .sat p {color:#0d6efd;}
+.rent_calendar .date .wday {margin-top:-5px;}
+.rent_calendar .content table {}
+.rent_calendar .content td {position:relative;}
+.rent_calendar .content td div {width:100px; height:100px; border:1px solid #c8c8c8; border-left:none; border-top:none; padding:10px; margin:0; color:#787878; text-align:center; position:relative; z-index:1;}
+.rent_calendar .content .filled {background:#0d6efd; border:1px solid #005be0;  border-top:none; color:#ffffff; text-align:left; cursor:pointer;}
+.rent_calendar .content .filled p {color:rgba(255, 255, 255, 0.7);}
+.rent_calendar .content .filled .name {color:#ffffff; font-weight:bold;}
+.rent_calendar .content .filled.type00 {background:#dc3545; border-color:#b02a37;} /* 결제 대기 */
+.rent_calendar .content .filled.type00.on {background:#e35d6a;}
+.rent_calendar .content .filled.type01 {background:#cc9a06; border-color:#997404;} /* 결제 완료 */
+.rent_calendar .content .filled.type01.on {background:#fbbe07;}
+.rent_calendar .content .filled.type02 {background:#198754; border-color:#146c43;} /* 출고 대기 */
+.rent_calendar .content .filled.type02.on {background:#479f76;}
+.rent_calendar .content .filled.type03 {background:#0d6efd; border-color:#0a58ca;} /* 출고 완료 */
+.rent_calendar .content .filled.type03.on {background:#3d8bfd;}
+.rent_calendar .content .filled.type04 {background:#889097; border-color:#6c757d;} /* 반납 완료 */
+.rent_calendar .content .filled.type04.on {background:#9ca4ab;}
+.rent_calendar .content .filled.type99 {background:#212529; border-color:#0a0a0a;} /* 예약 불가 처리 */
+.rent_calendar .content .filled.type99.on {background:#343a40;}
+.rent_calendar .content .disabled {background:#f0f0f0; border-color:#c8c8c8;  color:#c8c8c8;}
+.rent_calendar .content .data {cursor:pointer; display:none; position:absolute; z-index:2; width:250px; min-height:300px; background:#ffffff; left:50px; top:50px; border-radius:5px; border:1px solid #dcdcdc; box-shadow:10px 10px 10px rgba(0,0,0,0.2); padding:0;}
+.rent_calendar .content .data thead th {padding:10px 0px 10px 15px; text-align:left;}
+.rent_calendar .content .data tbody td {border:1px solid #dcdcdc !important; padding:10px 0px 10px 0px; color:#1e1e1e;}
+.rent_calendar .content .data tbody tr td:nth-child(1) {border-left:none;}
+.rent_calendar .content .data tbody tr td:nth-child(2) {border-right:none;}
+.rent_calendar .content .data tbody td p {font-weight:bold; font-size:18px;}
+
+/* ================================================================================ 관리자 > 예약 > 카테고리 처리 */
+
+.category {padding:0px 0px 40px 0px;}
+.state {font-weight:bold;}
+.state.type00 {color:#dc3545;} /* 결제 대기 */
+.state.type01 {color:#cc9a06;} /* 결제 완료 */
+.state.type02 {color:#198754;} /* 출고 대기 */
+.state.type03 {color:#0d6efd;} /* 출고 완료 */
+.state.type04 {color:#889097;} /* 반납 완료 */
+th.state {border:1px solid #dcdcdc; font-weight:normal;}
+th.state.type00 {background:#f8d7da; border-color:#f1aeb5;}
+th.state.type01 {background:#fff3cd; border-color:#ffe69c;}
+th.state.type02 {background:#d1e7dd; border-color:#a3cfbb;}
+th.state.type03 {background:#cbddf7; border-color:#a1bbe1;}
+th.state.type04 {background:#e2e3e5;}
+th.state span {font-weight:bold !important;}
+
+

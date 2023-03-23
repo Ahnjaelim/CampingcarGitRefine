@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ccrent.mapper.CompanyMapper">
+
+
+	
+	<!--  리스트 -->
+	<select id="selectAll"
+		resultType="kr.co.ccrent.dto.CompanyDTO">
+ 			<![CDATA[
+ 			select *
+ 			from company
+ 			where comp_status > 0 and comp_name like CONCAT('%',#{keyword},'%')
+ 			limit #{pageStart},#{perPageNum}
+ 			]]>
+	</select>
+	
+	
+	<!-- 전체리스트 카운트 -->
+	<select id="selectAll_Count" resultType="int">
+	 		<![CDATA[
+	 		select count(comp_status)
+	 		from company
+	 		where comp_status > 0 and comp_name like CONCAT('%',#{keyword},'%')
+	 		]]>
+	</select>
+	
+	
+	<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+	<select id="selectAll3"
+		resultType="kr.co.ccrent.dto.CompanyDTO">
+ 			<![CDATA[
+ 			select *
+ 			from company
+ 			where comp_status > 0 and comp_name like CONCAT('%',#{keyword},'%')
+ 			limit #{pageStart},#{perPageNum}
+ 			]]>
+	</select>
+	
+	
+	<!-- 전체리스트 카운트 -->
+	<select id="selectAll3_Count" resultType="int">
+	 		<![CDATA[
+	 		select count(comp_status)
+	 		from company
+	 		where comp_status > 0 and comp_name like CONCAT('%',#{keyword},'%')
+	 		]]>
+	</select>
+
+	
+	
+	<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+	<select id="selectAll2"
+		resultType="kr.co.ccrent.dto.CompanyDTO">
+ 			<![CDATA[
+ 			select *
+ 			from company
+ 			where comp_status = 0 and comp_name like CONCAT('%',#{keyword},'%')
+ 			limit #{pageStart},#{perPageNum}
+ 			]]>
+	</select>
+	
+	
+	<!-- 전체리스트 카운트 -->
+	<select id="selectAll2_Count" resultType="int">
+	 		<![CDATA[
+	 		select count(comp_status)
+	 		from company
+	 		where comp_status = 0 and comp_name like CONCAT('%',#{keyword},'%')
+	 		]]>
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="getAll2" resultType="kr.co.ccrent.dto.CompanyDTO">
+		select * from company
+		where comp_status = 0
+ 		order by comp_id  desc 
+	</select>
+	
+	
+	
+	
+	<select id="getAll3" resultType="kr.co.ccrent.dto.CompanyDTO">
+		select * from company
+		where comp_status = 1
+ 		order by comp_id  desc 
+	</select>
+	
+	
+	
+	<select id="get" parameterType="java.lang.Integer" resultType="kr.co.ccrent.dto.CompanyDTO">
+		select * 
+		from company 
+		where comp_id =#{comp_id}
+	</select>
+	
+	<select id="get2" parameterType="java.lang.Integer" resultType="kr.co.ccrent.dto.CompanyDTO">
+		select * 
+		from company 
+		where comp_id =#{comp_id}
+	</select>
+	
+	<insert id="register" parameterType="kr.co.ccrent.dto.CompanyDTO">
+		insert into company(comp_id,comp_name,comp_addr,comp_phone,comp_pic,comp_pic_email,comp_status)
+ 		values (#{comp_id},#{comp_name},#{comp_addr},#{comp_phone},#{comp_pic},#{comp_pic_email},0) 	
+	</insert>
+	
+	<!-- status 1로 변경 : 1이면 승인 -->
+	<update id="stsmodify" parameterType="kr.co.ccrent.dto.CompanyDTO" >
+	update company
+	set comp_status = 1
+	where
+	comp_id = #{comp_id}
+	</update>
+
+	<!-- 정비소 정보 삭제 -->
+	<delete id="stsmodify2" parameterType="java.lang.Integer">
+		delete from
+		company
+		where comp_id = #{comp_id}
+	</delete>
+	
+
+
+	
+	
+</mapper>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ccrent.mapper.FaqBoardMapper">
+
+   <insert id="create" parameterType="kr.co.ccrent.dto.FaqBoardDTO">
+  	insert into cc_board(title,content,writer)
+  	values( #{title}, #{content}, #{writer})
+   </insert>
+   
+   <!--  
+   <insert id="createSelectKey">
+   <selectKey keyProperty="bno" order="BEFORE"
+   resultType="int">
+   select * from cc_board where bno=#{bno}
+   </selectKey>
+   
+   insert into cc_board (bno, title, content, writer)
+   values(#{bno}, #{title}, #{content}, #{writer})
+   </insert>
+   -->
+   
+   <select id="read" parameterType="java.lang.Integer" resultType="kr.co.ccrent.dto.FaqBoardDTO">
+   select * 
+   from cc_board
+   where bno=#{bno}
+   </select>
+   
+  
+  <update id="update" parameterType="kr.co.ccrent.dto.FaqBoardDTO">
+  update cc_board
+  set title= #{title},
+  content= #{content},
+  writer= #{writer}
+  
+  where bno = #{bno}
+   </update>
+  
+   
+   <delete id="delete" parameterType="java.lang.Integer">
+   delete from cc_board
+   where bno =#{bno}
+   </delete>
+   
+ 
+    <!--  리스트 -->
+   <select id="listCriteria"
+      resultType="kr.co.ccrent.dto.FaqBoardDTO">
+          <![CDATA[
+          select *
+          from cc_board
+          
+          limit #{pageStart},#{perPageNum}
+          ]]>
+   </select>
+   
+   
+   <!-- 전체리스트 카운트 -->
+   <select id="getAll_Count" resultType="int">
+          <![CDATA[
+          select count(bno)
+          from cc_board
+          
+          ]]>
+   </select>
+   
+   <!-- 글 검색조건에 해당하는 페이지조회 -->
+	<select id="faq_select"
+		resultType="kr.co.ccrent.dto.FaqBoardDTO">
+ 		<![CDATA[
+ 		select 	*
+		from	cc_board
+		where 	bno > 0 and title like CONCAT('%',#{keyword},'%') || content like CONCAT('%',#{keyword},'%')
+ 		limit #{pageStart},#{perPageNum}
+ 		]]>
+	</select>
+
+	<!-- 글 검색조건에 해당하는 전체 게시물 수 조회 -->
+	<select id="faq_select_count" resultType="int">
+		<![CDATA[
+		select 	count(bno)
+		from 	cc_board
+		where 	bno >0 and title like CONCAT('%',#{keyword},'%')|| content like CONCAT('%',#{keyword},'%')
+		]]>
+	</select>
+   
+   </mapper>

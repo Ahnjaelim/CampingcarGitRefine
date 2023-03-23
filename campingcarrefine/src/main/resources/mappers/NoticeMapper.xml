@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.ccrent.mapper.NoticeMapper">
+<!-- 공지사항 등록 -->
+<insert id = "enroll">
+	insert into not_board(title, content, writer) values(#{title}, #{content}, #{writer})
+</insert>
+
+<!-- 공지사항 목록 -->
+<select id="getList" resultType="kr.co.ccrent.domain.NoticeVO">
+	select * from not_board
+</select>
+
+<!-- 검색 조건문 -->
+<sql id="criteria">
+        <trim prefix="where (" suffix=")" prefixOverrides="OR">
+            <foreach collection="typeArr" item="type">
+                <trim prefix="OR">
+                    <choose>
+                        <when test="type == 'T'.toString()">
+                            title like concat('%',#{keyword},'%') 
+                        </when>
+                        <when test="type == 'C'.toString()">
+                            content like concat('%',#{keyword},'%') 
+                        </when>
+                        <when test="type == 'W'.toString()">
+                            writer like concat('%',#{keyword},'%' )
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>
+        </trim>
+   </sql>
+ 
+
+<!-- 공지사항 목록(페이징) -->
+<select id="getListPaging" resultType="kr.co.ccrent.domain.NoticeVO">
+    
+     select * from (
+                select bno, title, writer, regdate, updatedate  
+                from not_board 
+                <if test="keyword != null">
+                    <include refid="criteria"></include>
+                </if>
+                order by bno desc) as T1
+        limit #{skip},#{amount}
+    
+    </select>
+
+<!-- 공지사항 조회 -->
+<select id="getPage" resultType="kr.co.ccrent.domain.NoticeVO">
+	select * from not_board where bno = #{bno} 
+</select>  
+
+<!-- 공지사항 수정 -->
+<update id ="modify">
+	update not_board set bno = #{bno} ,title = #{title}, content = #{content}, writer = #{writer}, updatedate = now() where bno = #{bno}
+</update>
+   
+<!-- 공지사항 삭제 -->
+<delete id="delete">
+	delete from not_board where bno = #{bno}
+</delete>   
+   
+<!-- 공지사항 총 개수 -->
+<select id="getTotal" resultType="int">
+    
+        select count(*) from not_board
+        
+       <if test="keyword != null">
+            <include refid="criteria"></include>
+        </if> 
+    
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

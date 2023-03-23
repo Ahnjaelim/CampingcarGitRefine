@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+body {margin:0; padding:0; background:#f0f0f0;}
+table {background:#ffffff;}
+
+/* 레이아웃 */
+#container {position:relative;}
+#topmenu {height:50px; width:2000px; background:#ffffff; position:fixed; padding:0px 0px 0px 300px; border-bottom:1px solid #dcdcdc; z-index:999998;}
+#sidebar {background:#0b131c; height:100%; width:280px; position:fixed; top:0; left:0; padding:10px; z-index:999999;}
+#wrap {padding:110px 60px 60px 300px;}
+
+/* 탑메뉴 */
+#topmenu h2 {font-weight:bold; font-size:18px; padding:11px 0px 0px 0px;}
+#topmenu h2 i {color:#c8c8c8;}
+
+/* 사이드 바*/
+#sidebar h1 {text-align:center; font-size:1em; color:#ffffff; padding:30px 0px 30px 0px;}
+#sidebar h1 p {padding:10px 0px 0px 0px;}
+#sidebar li {margin:5px 0px 0px 0px;}
+#sidebar li a {display:block; padding:10px 10px 10px 20px; border:1px solid rgba(255, 255, 255, 0.1); color:#ffffff; border-radius:5px; background:rgba(255, 255, 255, 0.05); font-weight:bold;}
+#sidebar li a i {color:rgba(255, 255, 255, 0.6);}
+#sidebar li li {margin:0;}
+#sidebar li li a {border:none; padding:15px 0px 0px 20px; background:transparent; font-weight:normal; color:rgba(255, 255, 255, 0.7);}
+#sidebar li li a i {color:rgba(255, 255, 255, 0.3);}
+#sidebar li ul {padding:0px 0px 15px 0px;}

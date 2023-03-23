@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+#header_over{width:100%; height:1px; background:rgba(255,255,255, 0.9); position:absolute; top:-1px; left:0px; z-index:1;}
+#header_outer {border-bottom:1px solid rgba(255, 255, 255, 0.2); height:140px; overflow:hidden; position:absolute; top:0px; left:0px; width:100%; z-index:2;}
+#header {width:1200px; margin:0px auto;}
+#header a {color:#ffffff;}
+#header #gnb {height:40px; text-align:right; padding:10px 0px 0px 0px;}
+#header #gnb ul {float:right;}
+#header #gnb li {float:left; margin:0px 0px 0px 20px; }
+#header #gnb a {color:rgba(255, 255, 255, 0.6);}
+#header h1 {width:15%; float:left; height:100px;}
+#header #topmenu {width:85%; float:right;}
+#header #topmenu ul {float:right;}
+#header #topmenu ul li {float:left;}
+#header #topmenu ul li a {display:block; padding:40px 0px; font-size:18px; text-align:center; width:120px; font-weight:400;}
+
+#header #topmenu ul li:nth-last-child(1) a{padding-right:0;}
+
+/* 서브 메뉴 */
+#header #topmenu li ul {float:none; clear:both !important; padding:0px 0px 0px 0px; width:50px; }
+#header #topmenu li li {clear:both; width:150px;}
+#header #topmenu li li a {padding:0px 0px 15px 0px; text-align:center; font-size:15px; font-weight:300;}
+
+/* 마우스 오버 */
+#header_outer.over a {color:#1a1a1a !important;}
+#header_outer.over li {}
+
+#header_outer li:hover > a {color:#0d6efd !important;}

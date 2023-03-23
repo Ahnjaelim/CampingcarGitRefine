@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> <!-- ★메소드는 pdf보고 작성완료후에 수정★ -->
+<mapper namespace="kr.co.ccrent.mapper.QnaMapper">
+
+	<!-- 게시판 작성 -->
+	<insert id="create">
+		insert into qna (qna_title, qna_content, qna_writer)
+		values(#{qna_title},#{qna_content},#{qna_writer})
+	</insert>
+
+	<!-- 게시판 상세보기 -->
+	<select id="read" resultType="kr.co.ccrent.domain.QnaVO">
+		select * from qna
+		where qna_no
+		=
+		#{qna_no}
+	</select>
+
+	<!-- 수정 -->
+	<update id="update" parameterType="QnaVO">
+		update qna set qna_no =
+		#{qna_no},
+		qna_title = #{qna_title},
+		qna_content = #{qna_content},
+		qna_writer = #{qna_writer}
+		where qna_no = #{qna_no}
+	</update>
+
+	<!-- 삭제 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from qna where qna_no =
+		#{qna_no}
+	</delete>
+
+	<!-- 참고용입니다 !! 검색 기능 없는 페이징 처리 완료된 게시판 리스트 -->
+	<select id="selectAll" resultType="kr.co.ccrent.dto.QnaDTO">
+          <![CDATA[
+          select *
+          from qna
+          where qna_no > 0
+          order by qna_no desc
+          limit #{pageStart},#{perPageNum}
+          ]]>
+	</select>
+
+	<!-- 참고용입니다 !! 검색 기능 없는 전체리스트 카운트 -->
+	<select id="selectAll_Count" resultType="int">
+          <![CDATA[
+          select count(qna_no)
+          from qna
+          where qna_no > 0
+          ]]>
+	</select>
+		
+	<!-- 검색 기능 , 페이징 처리 완료된 게시판 리스트 -->
+	<select id="qna_select" resultType="kr.co.ccrent.dto.QnaDTO">
+ 		<![CDATA[
+ 		select * from qna
+		where qna_no > 0 and qna_title like CONCAT('%',#{keyword},'%') || 
+		qna_content like CONCAT('%',#{keyword},'%')
+		order by qna_no desc
+ 		limit #{pageStart},#{perPageNum}
+ 		]]>
+	</select>
+
+	<!-- 검색조건에 해당하는 전체 게시물 수 조회 -->
+	<select id="qna_select_count" resultType="int">
+		<![CDATA[
+		select 	count(qna_no)
+		from 	qna
+		where 	qna_no >0 and qna_title like CONCAT('%',#{keyword},'%')||
+		qna_content like CONCAT('%',#{keyword},'%')
+		]]>
+	</select>
+	
+</mapper>

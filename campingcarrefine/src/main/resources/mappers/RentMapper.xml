@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ccrent.mapper.RentMapper">
+
+	<select id="selectTime" resultType="String">
+		select now()
+	</select>
+
+	<!-- 기존 selectOne을 Car테이블과 Join으로 변경 -->
+	<resultMap type="kr.co.ccrent.domain.CarVO" id="CarVO">
+		<result column="car_regid" property="car_regid" />
+		<result column="car_modelname" property="car_modelname" />
+		<result column="car_name" property="car_name" />
+	</resultMap>
+
+	<resultMap type="kr.co.ccrent.domain.RentVO" id="RentVO">
+		<result column="rent_id" property="rent_id" />
+		<result column="user_id" property="user_id" />
+		<result column="car_uid" property="car_uid" />
+		<result column="rent_name" property="rent_name" />
+		<result column="rent_phone1" property="rent_phone1" />
+		<result column="rent_phone2" property="rent_phone2" />
+		<result column="rent_startdate" property="rent_startdate" />
+		<result column="rent_enddate" property="rent_enddate" />
+		<result column="rent_option1" property="rent_option1" />
+		<result column="rent_option2" property="rent_option2" />
+		<result column="rent_price" property="rent_price" />
+		<result column="rent_paytype" property="rent_paytype" />
+		<result column="rent_paystate" property="rent_paystate" />
+		<result column="rent_state" property="rent_state" />
+		<result column="rent_memo" property="rent_memo" />
+		<result column="rent_datetime" property="rent_datetime" />
+		<result column="cnt" property="cnt" />
+		<collection property="car" resultMap="CarVO" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="kr.co.ccrent.domain.RentVO">
+		insert into rent (car_regid, car_uid, rent_name, rent_password, rent_phone1, rent_phone2, rent_startdate, rent_enddate, rent_option1, rent_option2, rent_price, rent_paytype, rent_paystate, rent_state, rent_memo, rent_datetime) 
+		values (#{car_regid}, #{car_uid}, #{rent_name}, #{rent_password}, #{rent_phone1}, #{rent_phone2}, #{rent_startdate}, #{rent_enddate}, #{rent_option1}, #{rent_option2}, #{rent_price}, #{rent_paytype}, #{rent_paystate}, #{rent_state}, #{rent_memo}, now())
+	</insert>
+	
+	<select id="selectAll" resultMap="RentVO">
+		select r.*, c.car_regid, c.car_name, c.car_modelname
+		from rent r
+		join car c
+		on r.car_regid = c.car_regid
+		<if test="limit != null">
+			limit 0, ${limit}
+		</if>
+	</select>
+
+	<!-- 검색 처리 -->
+	<sql id="search">
+	<where>
+		<if test="types != null and types.length > 0">
+			<foreach collection="types" item="type" open="(" close=")" separator=" OR ">
+				<if test="type=='rent_name'.toString()">
+					rent_name like concat('%', #{keyword}, '%')
+				</if>
+				<if test="type=='rent_phone1'.toString()">
+					rent_phone1 like concat('%', #{keyword}, '%')
+				</if>				
+			</foreach>
+		</if>
+		<if test="category != null and category != '' ">
+			<trim prefix="and">
+				rent_paystate = ${category}
+			</trim>
+		</if>
+		<if test="from != null and to != null">
+			<trim prefix="and">
+				rent_startdate between #{from} and #{to}
+			</trim>
+		</if>
+	</where>	
+	</sql>
+	<select id="selectList" resultType="kr.co.ccrent.domain.RentVO">
+		select * from rent
+		<include refid="search"></include>
+		order by rent_id desc limit #{skip}, #{size}
+	</select>
+
+	<select id="selectCount" resultType="int">
+		select count(rent_id) from rent
+		<include refid="search"></include>
+	</select>	
+
+	<select id="selectByCarId" parameterType="HashMap" resultType="kr.co.ccrent.domain.RentVO">
+		select * from rent 
+		<!-- <![CDATA[where car_regid = #{car_regid} and rent_startdate >= #{firstday} and rent_startdate <= #{lastday}]]>  -->
+		<![CDATA[where car_regid = #{car_regid} and rent_state != 2 and ((rent_enddate >= #{firstday} and rent_enddate <= #{lastday}) or (rent_startdate >= #{firstday} and rent_startdate <= #{lastday})) ]]>
+	</select>
+	
+	<!--<select id="selectOne" resultType="kr.co.ccrent.domain.RentVO">
+		select * from rent where rent_id=#{rent_id}
+	</select>-->
+	
+
+	
+	<select id="selectOne" resultMap="RentVO">
+		select r.*, c.car_regid, c.car_name, c.car_modelname
+		from rent r
+		join car c
+		on r.car_regid = c.car_regid
+		where r.rent_id = #{rent_id}
+	</select>
+	
+	<!-- 예약 상태 변경 (rent_paystate) -->
+	<update id="updateState" parameterType="kr.co.ccrent.domain.RentVO">
+		update rent set rent_paystate=#{rent_paystate} where rent_id=#{rent_id}
+	</update>
+	
+	<!-- 예약 취소 상태 변경 (rent_state) -->
+	<update id="updateCancel" parameterType="kr.co.ccrent.domain.RentVO">
+		update rent set rent_state=#{rent_state} where rent_id=#{rent_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from rent where rent_id = #{rent_id}
+	</delete>
+
+	<!-- 오늘의 출고, 반납 차량 -->
+	<select id="selectTodayStart" parameterType="String" resultMap="RentVO">
+		select r.*, c.car_regid, c.car_name, c.car_modelname from rent r join car c on r.car_regid = c.car_regid
+		where r.rent_startdate = #{today} order by rent_id desc
+	</select>
+	<select id="selectTodayEnd" parameterType="String" resultMap="RentVO">
+		select r.*, c.car_regid, c.car_name, c.car_modelname from rent r join car c on r.car_regid = c.car_regid
+		where r.rent_enddate = #{today} order by rent_id desc
+	</select>
+	
+	<!-- 예약 날짜 중복 검사 -->
+	<select id="selectDateRedundancy" parameterType="HashMap" resultType="kr.co.ccrent.domain.RentVO">
+		select rent_id, rent_startdate, rent_enddate from rent
+		<![CDATA[where car_regid = #{car_regid} and rent_enddate > #{rent_enddate} and rent_startdate < #{rent_enddate}]]>
+		order by rent_id limit 1
+	</select>
+	
+	<!-- 예약 확인 -->
+	<select id="selectGuest" parameterType="kr.co.ccrent.domain.RentVO" resultMap="RentVO">
+		select r.*, c.car_regid, c.car_name, c.car_modelname
+		from rent r
+		join car c
+		on r.car_regid = c.car_regid
+		where rent_name = #{rent_name} and rent_password = #{rent_password} and rent_phone1 = #{rent_phone1}
+	</select>
+	<select id="selectMember" parameterType="String" resultMap="RentVO">
+		select r.*, c.car_regid, c.car_name, c.car_modelname
+		from rent r
+		join car c
+		on r.car_regid = c.car_regid
+		where car_uid = #{car_uid}
+	</select>
+	
+	
+	<!-- ============================================================  -->
+	<select id="selectBestCar" resultMap="RentVO">
+		SELECT r.rent_id, c.car_regid, c.car_name, c.car_modelname, COUNT(*) as cnt
+		from rent r
+		join car c
+		on r.car_regid = c.car_regid
+		GROUP BY car_regid ORDER BY COUNT(*) desc
+		limit 0, 5
+	</select>
+	
+	<select id="selectDailyChart" resultType="HashMap">
+		SELECT DATE(`rent_datetime`) as `date` , COUNT(*) AS cnt
+		FROM rent
+		GROUP BY `date`
+	</select>	
+	
+</mapper>
